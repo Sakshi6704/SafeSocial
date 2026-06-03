@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Search Users</title>
+
+ <style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    min-height:100vh;
+
+    padding:40px;
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    background:
+    linear-gradient(
+    135deg,
+    #020617,
+    #081120,
+    #0f172a,
+    #111827
+    );
+
+    color:white;
+
+    overflow-x:hidden;
+}
+
+/* FLOATING BUTTONS */
+
+.top-buttons{
+
+    position:fixed;
+
+    top:25px;
+    right:40px;
+
+    display:flex;
+
+    gap:15px;
+
+    z-index:1000;
+}
+
+.nav-btn{
+
+    text-decoration:none;
+
+    padding:12px 24px;
+
+    border-radius:14px;
+
+    font-weight:bold;
+
+    color:white;
+
+    background:
+    rgba(255,255,255,0.08);
+
+    border:
+    1px solid rgba(255,255,255,0.1);
+
+    backdrop-filter:blur(10px);
+
+    transition:0.35s;
+}
+
+.nav-btn:hover{
+
+    background:#3b82f6;
+
+    transform:
+    translateY(-4px)
+    scale(1.05);
+
+    box-shadow:
+    0 12px 25px rgba(59,130,246,0.45);
+}
+
+/* TITLE */
+
+.title{
+
+    font-size:52px;
+
+    font-weight:800;
+
+    margin-bottom:45px;
+
+    letter-spacing:1px;
+
+    background:
+    linear-gradient(
+    to right,
+    #60a5fa,
+    #c084fc,
+    #f472b6
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+    animation:fadeDown 1s ease;
+}
+
+/* GRID */
+
+.users-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(280px,1fr));
+
+    gap:32px;
+}
+
+/* USER CARD */
+
+.user-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:35px 25px;
+
+    border-radius:30px;
+
+    text-align:center;
+
+    background:
+    rgba(255,255,255,0.06);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(18px);
+
+    transition:0.45s;
+
+    animation:fadeUp 0.8s ease;
+}
+
+/* ANIMATED LIGHT */
+
+.user-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-120%;
+
+    left:-40%;
+
+    width:180%;
+
+    height:180%;
+
+    background:
+    linear-gradient(
+    45deg,
+    transparent,
+    rgba(59,130,246,0.12),
+    transparent
+    );
+
+    transform:rotate(25deg);
+
+    transition:0.7s;
+}
+
+.user-card:hover::before{
+
+    left:120%;
+}
+
+/* CARD HOVER */
+
+.user-card:hover{
+
+    transform:
+    translateY(-14px)
+    scale(1.03);
+
+    box-shadow:
+    0 20px 45px rgba(0,0,0,0.5);
+}
+
+/* PROFILE IMAGE */
+
+.profile{
+
+    width:120px;
+    height:120px;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    margin-bottom:22px;
+
+    border:4px solid #3b82f6;
+
+    transition:0.45s;
+
+    box-shadow:
+    0 0 30px rgba(59,130,246,0.55);
+}
+
+.user-card:hover .profile{
+
+    transform:
+    scale(1.08)
+    rotate(4deg);
+
+    border-color:#c084fc;
+
+    box-shadow:
+    0 0 40px rgba(192,132,252,0.7);
+}
+
+/* USERNAME */
+
+.username{
+
+    font-size:30px;
+
+    font-weight:800;
+
+    margin-bottom:12px;
+
+    text-transform:capitalize;
+
+    letter-spacing:0.5px;
+}
+
+/* USER ID */
+
+.userid{
+
+    font-size:17px;
+
+    color:#cbd5e1;
+
+    letter-spacing:1px;
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+
+    width:10px;
+}
+
+::-webkit-scrollbar-track{
+
+    background:#081120;
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#2563eb;
+
+    border-radius:20px;
+}
+
+/* ANIMATIONS */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(40px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0);
+    }
+}
+
+@keyframes fadeDown{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(-40px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0);
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+    <div class="title">
+
+        Total Users :
+        {{ users|length }}
+
+    </div>
+
+    <div class="users-grid">
+
+        {% for user in users %}
+
+        <div class="user-card">
+
+  <img
+src="{{ url_for('static',
+filename='profiles/i' ~ ((loop.index % 12) + 1) ~ '.jpg') }}"
+class="profile"
+>
+                <div class="username">
+    {{ user['username'] }}
+</div>
+
+
+           <div class="userid">
+    {{ user['email'] }}
+</div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+ <div class="top-buttons">
+
+    <a href="/search" class="nav-btn">
+       🔍 Search 
+    </a>
+
+    <a href="/feed" class="nav-btn">
+        Feed Page
+    </a>
+
+</div>   
+
+</body>
+</html>

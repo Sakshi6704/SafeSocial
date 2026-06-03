@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SafeSocial Search</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#0f172a;
+    color:white;
+    font-family:Arial,sans-serif;
+    min-height:100vh;
+    padding:30px;
+}
+
+.search-container{
+    max-width:700px;
+    margin:auto;
+}
+
+.title{
+    text-align:center;
+    font-size:42px;
+    margin-bottom:30px;
+    font-weight:bold;
+
+    background:linear-gradient(
+        to right,
+        #38bdf8,
+        #8b5cf6
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* SEARCH BOX */
+
+.search-box{
+    background:#111827;
+    padding:20px;
+    border-radius:20px;
+    border:1px solid #1e293b;
+    margin-bottom:30px;
+}
+
+.search-input{
+    width:100%;
+    padding:16px;
+    border:none;
+    outline:none;
+    border-radius:14px;
+    background:#1e293b;
+    color:white;
+    font-size:16px;
+}
+
+.search-btn{
+    width:100%;
+    margin-top:18px;
+    padding:15px;
+    border:none;
+    border-radius:14px;
+
+    background:linear-gradient(
+        to right,
+        #38bdf8,
+        #8b5cf6
+    );
+
+    color:white;
+    font-size:17px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.search-btn:hover{
+    transform:scale(1.02);
+}
+
+/* SEARCH OPTIONS */
+
+.option-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.option-card{
+    background:#111827;
+    padding:22px;
+    border-radius:18px;
+    border:1px solid #1e293b;
+    transition:0.3s;
+    cursor:pointer;
+}
+
+.option-card:hover{
+    transform:translateY(-6px);
+    border-color:#38bdf8;
+}
+
+.option-card i{
+    font-size:35px;
+    margin-bottom:15px;
+    color:#38bdf8;
+}
+
+.option-card h2{
+    font-size:20px;
+    margin-bottom:10px;
+}
+
+.option-card p{
+    color:#cbd5e1;
+    line-height:1.6;
+    font-size:14px;
+}
+
+/* QUICK LINKS */
+
+.quick-links{
+    margin-top:40px;
+}
+
+.quick-links h2{
+    margin-bottom:20px;
+}
+
+.links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:15px;
+}
+
+.links a{
+    text-decoration:none;
+    background:#1e293b;
+    color:white;
+    padding:12px 18px;
+    border-radius:12px;
+    transition:0.3s;
+}
+
+.links a:hover{
+    background:#38bdf8;
+}
+
+/* RESULT */
+
+.result-box{
+    margin-top:25px;
+    background:#111827;
+    padding:18px;
+    border-radius:16px;
+    display:none;
+}
+
+.result-box h3{
+    color:#38bdf8;
+    margin-bottom:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="search-container">
+
+    <div class="title">
+        🔍 SafeSocial Search
+    </div>
+
+    <!-- SEARCH BOX -->
+
+    <div class="search-box">
+
+        <input
+        type="text"
+        id="searchInput"
+        class="search-input"
+        placeholder="Search users, posts, hashtags...">
+
+        <button
+        class="search-btn"
+        onclick="performSearch()">
+
+            Search Now
+
+        </button>
+
+        <div class="result-box" id="resultBox">
+
+            <h3>Search Result</h3>
+
+            <p id="resultText"></p>
+
+        </div>
+
+    </div>
+
+    <!-- SEARCH OPTIONS -->
+
+    <div class="option-grid">
+
+        <div class="option-card">
+            <i class="fa-solid fa-user"></i>
+            <h2>User Search</h2>
+            <p>
+                Search users like
+                sakshu, alex, emma
+            </p>
+        </div>
+
+        <div class="option-card">
+            <i class="fa-solid fa-file-lines"></i>
+            <h2>Post Search</h2>
+            <p>
+                Find captions like
+                happy, hate, nature
+            </p>
+        </div>
+
+        <div class="option-card">
+            <i class="fa-solid fa-image"></i>
+            <h2>Image Search</h2>
+            <p>
+                Search uploaded images,
+                memes, quotes, dogs
+            </p>
+        </div>
+
+        <div class="option-card">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <h2>Hate Search</h2>
+            <p>
+                Detect harmful or hate
+                related content
+            </p>
+        </div>
+
+        <div class="option-card">
+            <i class="fa-solid fa-hashtag"></i>
+            <h2>Hashtag Search</h2>
+            <p>
+                Search trending hashtags
+                like #fun #coding
+            </p>
+        </div>
+
+        <div class="option-card">
+            <i class="fa-solid fa-bolt"></i>
+            <h2>Realtime Search</h2>
+            <p>
+                Instant live search
+                experience like Instagram
+            </p>
+        </div>
+
+    </div>
+
+    <!-- QUICK LINKS -->
+
+    <div class="quick-links">
+
+        <h2>🌐 Quick Search Platforms</h2>
+
+        <div class="links">
+
+            <a href="https://www.google.com"
+            target="_blank">
+                Google
+            </a>
+
+            <a href="https://www.youtube.com"
+            target="_blank">
+                YouTube
+            </a>
+
+            <a href="https://www.instagram.com"
+            target="_blank">
+                Instagram
+            </a>
+
+            <a href="https://github.com"
+            target="_blank">
+                GitHub
+            </a>
+
+            <a href="https://www.wikipedia.org"
+            target="_blank">
+                Wikipedia
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function performSearch(){
+
+    let input =
+    document.getElementById(
+        "searchInput"
+    ).value;
+
+    let resultBox =
+    document.getElementById(
+        "resultBox"
+    );
+
+    let resultText =
+    document.getElementById(
+        "resultText"
+    );
+
+    resultBox.style.display =
+    "block";
+
+    if(input.trim() == ""){
+
+        resultText.innerHTML =
+        "Please enter something to search.";
+    }
+
+    else{
+
+        resultText.innerHTML =
+        "Showing results for: <b>" +
+        input +
+        "</b>";
+    }
+}
+
+</script>
+
+</body>
+</html>

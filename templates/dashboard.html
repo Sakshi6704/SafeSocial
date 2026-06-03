@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <h2>SafeSocial AI</h2>
+  <div>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/detect">Detect</a>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/history">History</a>
+    <a href="/logout">Logout</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="card">
+    <h2>Welcome, {{ username }}</h2>
+    <p>Your activity dashboard</p>
+  </div>
+
+  <div class="card">
+    <h2>Detection Summary</h2>
+    <canvas id="chart"></canvas>
+  </div>
+</div>
+
+<script>
+const hateCount = {{ hate_count }};
+const neutralCount = {{ neutral_count }};
+
+new Chart(document.getElementById("chart"), {
+  type: 'pie',
+  data: {
+    labels: ["Hate", "Neutral"],
+    datasets: [{
+      data: [hateCount, neutralCount],
+      backgroundColor: ["#ef4444", "#22c55e"]
+    }]
+  }
+});
+</script>
+
+</body>
+</html>

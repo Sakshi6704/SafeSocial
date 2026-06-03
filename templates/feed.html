@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SafeSocial Feed</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
+    overflow-x:hidden;
+}
+
+body{
+    background:#0f172a;
+    font-family:Arial,sans-serif;
+    color:white;
+    padding-bottom:100px;
+}
+
+/* TOP BAR */
+
+.topbar{
+    width:100%;
+    padding:18px 20px;
+    background:#111827;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    border-bottom:1px solid #1e293b;
+}
+
+.logo{
+    font-size:26px;
+    font-weight:bold;
+    background:linear-gradient(to right,#38bdf8,#8b5cf6);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.top-icons{
+    display:flex;
+    gap:18px;
+    font-size:22px;
+}
+
+.top-icons i{
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.top-icons i:hover{
+    color:#38bdf8;
+    transform:scale(1.1);
+}
+
+/* STORIES */
+
+.story-section{
+    display:flex;
+    overflow-x:auto;
+    gap:18px;
+    padding:18px;
+    scrollbar-width:none;
+    background:#111827;
+    border-bottom:1px solid #1e293b;
+}
+
+.story-section::-webkit-scrollbar{
+    display:none;
+}
+
+.story{
+    text-align:center;
+    min-width:75px;
+}
+
+.story img{
+    width:72px;
+    height:72px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid #38bdf8;
+    padding:2px;
+    transition:0.3s;
+}
+
+.story img:hover{
+    transform:scale(1.08);
+}
+
+.story p{
+    margin-top:8px;
+    font-size:13px;
+    color:#e2e8f0;
+}
+
+/* FEED */
+
+.feed-container{
+    width:100%;
+    max-width:500px;
+    margin:20px auto;
+}
+
+/* POST */
+
+.post{
+    background:#111827;
+    border-radius:18px;
+    overflow:hidden;
+    margin-bottom:30px;
+    border:1px solid #1e293b;
+    box-shadow:0 6px 20px rgba(0,0,0,0.35);
+    animation:fadeUp 0.5s ease;
+}
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.post-header{
+    padding:14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.user-info{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.user-info img{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.username{
+    font-size:15px;
+    font-weight:bold;
+}
+
+.location{
+    font-size:12px;
+    color:#94a3b8;
+}
+
+.post-header i{
+    font-size:20px;
+    cursor:pointer;
+}
+
+.post-image{
+
+    width:100%;
+
+    height:500px;
+
+    object-fit:contain;
+
+    background:#000;
+
+    display:block;
+}
+/* ACTIONS */
+
+.actions{
+    display:flex;
+    justify-content:space-between;
+    padding:15px;
+    font-size:24px;
+}
+
+.left-actions{
+    display:flex;
+    gap:18px;
+}
+
+.actions i{
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.actions i:hover{
+    transform:scale(1.15);
+    color:#38bdf8;
+}
+
+/* CONTENT */
+
+.post-content{
+    padding:0 15px 18px;
+}
+
+.likes{
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.caption{
+    line-height:1.6;
+    color:#e2e8f0;
+}
+
+.caption span{
+    font-weight:bold;
+    color:white;
+}
+
+.date{
+    margin-top:12px;
+    color:#94a3b8;
+    font-size:12px;
+}
+
+/* DETECT BUTTON */
+
+.detect-btn{
+    margin-top:15px;
+    background:#f59e0b;
+    color:white;
+    border:none;
+    padding:10px 16px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.detect-btn:hover{
+    transform:scale(1.05);
+    background:#f97316;
+}
+
+.result{
+    margin-top:10px;
+    color:#38bdf8;
+    font-weight:bold;
+}
+
+/* DELETE BUTTON */
+
+.delete-btn{
+    margin-top:12px;
+    background:#ef4444;
+    color:white;
+    border:none;
+    padding:10px 16px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.delete-btn:hover{
+    background:#dc2626;
+    transform:scale(1.05);
+}
+
+/* BOTTOM NAVBAR */
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:75px;
+
+    background:#111827;
+    border-top:1px solid #1e293b;
+
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+
+    z-index:999;
+}
+
+.nav-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    text-decoration:none;
+    color:#cbd5e1;
+
+    font-size:11px;
+    gap:4px;
+
+    flex:1;
+    transition:0.3s;
+}
+
+.nav-item i{
+    font-size:22px;
+}
+
+.nav-item:hover{
+    color:#38bdf8;
+}
+
+/* CENTER PLUS BUTTON */
+
+.plus-btn{
+    width:58px;
+    height:58px;
+    border-radius:50%;
+
+    background:linear-gradient(
+        135deg,
+        #38bdf8,
+        #421b9d
+    );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-top:-28px;
+
+    box-shadow:0 0 20px rgba(56,189,248,0.5);
+}
+
+.plus-btn i{
+    font-size:24px;
+    color:white;
+}
+
+/* EMPTY */
+
+.empty{
+    text-align:center;
+    margin-top:100px;
+    color:#94a3b8;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:230px;
+    height:100vh;
+    background:#111827;
+    border-right:1px solid #1e293b;
+    padding:25px 18px;
+    display:flex;
+    flex-direction:column;
+    z-index:2000;
+}
+
+.sidebar-logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:40px;
+    font-size:24px;
+    font-weight:bold;
+    color:#38bdf8;
+}
+
+.sidebar-logo i{
+    font-size:28px;
+}
+
+.side-item{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:14px 16px;
+    margin-bottom:12px;
+    border-radius:14px;
+    text-decoration:none;
+    color:#e2e8f0;
+    font-size:16px;
+    transition:0.3s;
+}
+
+.side-item i{
+    font-size:20px;
+}
+
+.side-item:hover{
+    background:#1e293b;
+    transform:translateX(5px);
+    color:#38bdf8;
+}
+
+.report-btn{
+    background:linear-gradient(135deg,#f59e0b,#ef4444);
+    color:white;
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(239,68,68,0.5);}
+    70%{box-shadow:0 0 0 15px rgba(239,68,68,0);}
+    100%{box-shadow:0 0 0 0 rgba(239,68,68,0);}
+}
+
+.logout-btn:hover{
+    background:#ef4444;
+    color:white;
+}
+
+/* MAIN CONTENT SHIFT */
+
+.topbar,
+.story-section,
+.feed-container,
+.bottom-nav{
+    margin-left:230px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .sidebar{
+        width:75px;
+    }
+
+    .sidebar-logo span,
+    .side-item span{
+        display:none;
+    }
+
+    .topbar,
+    .story-section,
+    .feed-container,
+    .bottom-nav{
+        margin-left:75px;
+    }
+}
+
+/* TOP RIGHT ADD BUTTON */
+
+.top-add-btn{
+    position:fixed;
+    top:15px;
+    right:15px;
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#38bdf8,#a855f7);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    color:white;
+    box-shadow:0 0 25px rgba(13, 68, 92, 0.7);
+    z-index:9999;
+    cursor:pointer;
+}
+
+.top-add-btn i{
+    color:white;
+}
+
+.floating-detect-box{
+
+    position:fixed;
+
+    right:40px;
+
+    top:120px;
+
+    width:340px;
+
+    max-height:80vh;
+
+    overflow-y:auto;
+
+    background:#111827;
+
+    border:1px solid #1e293b;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.4);
+
+    z-index:999;
+
+    scrollbar-width:thin;
+}
+
+
+/* SCROLLBAR */
+
+.floating-detect-box::-webkit-scrollbar{
+
+    width:8px;
+}
+
+.floating-detect-box::-webkit-scrollbar-thumb{
+
+    background:#38bdf8;
+
+    border-radius:10px;
+}
+
+.floating-detect-box h2{
+
+    margin-bottom:15px;
+
+    font-size:22px;
+
+    color:#38bdf8;
+}
+
+.floating-detect-box textarea{
+
+    width:100%;
+
+    height:180px;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    border:none;
+
+    resize:vertical;
+
+    overflow-y:auto;
+
+    outline:none;
+
+    background:#e5e7eb;
+
+    color:black;
+
+    font-size:15px;
+}
+
+.floating-detect-box button:hover{
+
+    background:#0ea5e9;
+}
+
+#globalResult{
+
+    margin-top:18px;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    line-height:1.7;
+}
+
+/* LIKE BUTTON */
+
+.like-btn{
+    transition:0.3s;
+    cursor:pointer;
+}
+
+.like-btn.active{
+    color:#ef4444;
+    transform:scale(1.15);
+}
+
+
+/* COMMENT SECTION */
+
+.comment-section{
+    margin-top:18px;
+}
+
+.comment-input-box{
+    display:flex;
+    gap:10px;
+}
+
+.comment-input-box input{
+
+    flex:1;
+
+    padding:10px 14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    outline:none;
+
+    background:#1e293b;
+
+    color:white;
+}
+
+.comment-input-box button{
+
+    background:#38bdf8;
+
+    border:none;
+
+    color:white;
+
+    padding:10px 16px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+}
+
+.comment-input-box button:hover{
+    background:#0ea5e9;
+}
+
+
+/* COMMENTS */
+
+.comments-list{
+    margin-top:15px;
+}
+
+.single-comment{
+
+    background:#0f172a;
+
+    padding:10px 14px;
+
+    border-radius:10px;
+
+    margin-bottom:10px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    animation:fadeUp 0.3s ease;
+}
+
+.single-comment button{
+
+    background:#ef4444;
+
+    border:none;
+
+    color:white;
+
+    padding:6px 10px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:12px;
+}
+
+.hidden-comments{
+    display:none;
+}
+
+.your-story img{
+
+    border:3px solid #a855f7;
+}
+
+.story-ring{
+
+    padding:3px;
+
+    border-radius:50%;
+
+    background:linear-gradient(
+        45deg,
+        #38bdf8,
+        #a855f7,
+        #ec4899
+    );
+}
+.share-modal{
+
+    display:none;
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,0.7);
+
+    backdrop-filter:blur(6px);
+
+    justify-content:center;
+    align-items:center;
+
+    z-index:99999;
+}
+
+.share-content{
+
+    background:#111827;
+
+    width:350px;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    animation:popup .4s ease;
+
+    box-shadow:0 0 30px rgba(56,189,248,.4);
+}
+
+@keyframes popup{
+
+    from{
+        opacity:0;
+        transform:scale(.6);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+.close-btn{
+
+    float:right;
+
+    font-size:28px;
+
+    cursor:pointer;
+
+    color:white;
+}
+
+.social-icons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+    margin-top:25px;
+}
+
+.social-icons a{
+
+    width:65px;
+
+    height:65px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-decoration:none;
+
+    font-size:30px;
+
+    color:white;
+
+    background:#1e293b;
+
+    transition:.4s;
+}
+
+.social-icons a:hover{
+
+    transform:translateY(-8px) scale(1.15);
+
+    box-shadow:0 0 25px #38bdf8;
+}
+
+.fa-whatsapp{
+    color:#25D366;
+}
+
+.fa-instagram{
+    color:#E1306C;
+}
+
+.fa-telegram{
+    color:#229ED9;
+}
+
+.fa-x-twitter{
+    color:white;
+}
+
+<style>
+
+.social-icons{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    margin-top:20px;
+}
+
+.social-icons a{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:26px;
+    color:white;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+.social-icons a:hover{
+    transform:scale(1.2) rotate(10deg);
+}
+
+/* Individual Colors */
+
+.social-icons .fa-whatsapp{
+    color:#25D366;
+}
+
+.social-icons .fa-instagram{
+    color:#E4405F;
+}
+
+.social-icons .fa-telegram{
+    color:#229ED9;
+}
+
+.social-icons .fa-x-twitter{
+    color:white;
+}
+
+.post-menu{
+    position:relative;
+    cursor:pointer;
+}
+
+.post-menu i{
+    font-size:20px;
+    padding:6px;
+    border-radius:50%;
+}
+
+.post-menu i:hover{
+    background:#1e293b;
+}
+
+/* MENU */
+.menu-box{
+    display:none;
+    position:absolute;
+    right:0;
+    top:30px;
+    background:#111827;
+    border:1px solid #334155;
+    border-radius:12px;
+    width:140px;
+    overflow:hidden;
+    z-index:9999;
+}
+
+.menu-box button{
+    width:100%;
+    padding:10px;
+    border:none;
+    background:none;
+    color:white;
+    text-align:left;
+    cursor:pointer;
+}
+
+.menu-box button:hover{
+    background:#38bdf8;
+    color:black;
+}
+
+.report-modal{
+    display:none;
+    position:fixed;
+    top:0;left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    backdrop-filter:blur(8px);
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+}
+
+.report-content{
+    background:#111827;
+    padding:25px;
+    width:380px;
+    border-radius:16px;
+    animation:pop 0.3s ease;
+}
+
+@keyframes pop{
+    from{transform:scale(0.7);opacity:0;}
+    to{transform:scale(1);opacity:1;}
+}
+
+.report-content textarea{
+    width:100%;
+    height:120px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+    padding:10px;
+}
+
+.report-content input{
+    margin-top:10px;
+    width:100%;
+}
+
+.report-content button{
+    margin-top:15px;
+    width:100%;
+    padding:10px;
+    background:#ef4444;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+
+<div class="topbar">
+
+    <div class="logo">
+        SafeSocial
+    </div>
+
+    <div class="top-icons">
+        <i class="fa-regular fa-heart"></i>
+       <i class="fa-regular fa-paper-plane"
+   onclick="openShare()"></i>
+    </div>
+
+</div>
+
+<a href="/create_post" class="top-add-btn">
+    <i class="fa-solid fa-plus"></i>
+</a>
+
+
+
+<!-- STORIES -->
+
+<div class="story-section">
+
+   <div class="story your-story">
+
+    <div class="story-ring">
+        <img src="{{ session.get('profile') }}">
+    </div>
+
+    <p>Your Story</p>
+
+</div>
+
+    <!-- OTHER STORIES -->
+
+    <div class="story">
+        <img src="https://i.pravatar.cc/150?img=12">
+        <p>Alex</p>
+    </div>
+
+    <div class="story">
+        <img src="https://i.pravatar.cc/150?img=32">
+        <p>Emma</p>
+    </div>
+
+    <div class="story">
+        <img src="https://i.pravatar.cc/150?img=15">
+        <p>Sophia</p>
+    </div>
+
+    <div class="story">
+        <img src="https://i.pravatar.cc/150?img=20">
+        <p>David</p>
+    </div>
+
+    <div class="story">
+        <img src="https://i.pravatar.cc/150?img=45">
+        <p>Olivia</p>
+    </div>
+
+    <div class="story">
+        <img src="https://i.pravatar.cc/150?img=18">
+        <p>Ryan</p>
+    </div>
+
+</div>
+
+<!-- FEED -->
+
+<div class="feed-container">
+
+{% if posts %}
+
+{% for post in posts %}
+
+<div class="post">
+
+    <!-- POST HEADER -->
+
+    <div class="post-header">
+
+        <div class="user-info">
+
+            <img src="{{ post['profile'] }}">
+
+            <div>
+
+                <div class="username">
+    {{ post["username"] }}
+</div>
+
+                <div class="location">
+                    SafeSocial Community
+                </div>
+
+            </div>
+
+        </div>
+<div class="post-menu">
+    <i class="fa-solid fa-ellipsis" onclick="toggleMenu(this)"></i>
+
+    <div class="menu-box">
+
+        <button onclick="openShare('{{ post['id'] }}','{{ post['username'] }}')">
+            📤 Share
+        </button>
+
+        <button onclick="deletePost({{ post['id'] }})">
+            🗑 Delete
+        </button>
+
+    </div>
+</div>
+    </div>
+
+    <!-- POST IMAGE -->
+
+    {% if post["image"] %}
+
+        {% if "uploads/" in post["image"] %}
+
+            <img
+            class="post-image"
+            src="{{ url_for('static', filename=post['image']) }}"
+            alt="Post Image">
+
+        {% else %}
+
+            <img
+            class="post-image"
+            src="{{ post['image'] }}"
+            alt="Post Image">
+
+        {% endif %}
+
+    {% endif %}
+
+   <div class="actions">
+
+    <div class="left-actions">
+
+        <!-- LIKE -->
+
+       <i class="fa-regular fa-heart like-btn"
+   onclick="toggleLike({{ post['id'] }}, this)">
+</i>
+
+        <!-- COMMENT -->
+
+        <i
+class="fa-regular fa-comment comment-toggle"
+onclick="toggleComments(this)">
+</i>
+
+       <i class="fa-regular fa-paper-plane"
+   onclick="openShare()"></i>
+
+    </div>
+
+    <i class="fa-regular fa-bookmark"></i>
+
+</div>
+
+    <!-- CONTENT -->
+
+    <div class="post-content">
+
+        <div class="likes"
+     id="likeCount{{ post['id'] }}">
+    {{ post['likes'] }} likes
+</div>
+        <div class="caption">
+
+            <span>
+                user_{{ loop.index }}
+            </span>
+
+            {{ post["text"] }}
+
+        </div>
+
+        <div class="date">
+            {{ post["created_at"] }}
+        </div>
+
+        <!-- COMMENTS SECTION -->
+
+<!-- COMMENTS SECTION -->
+
+<div class="comment-section hidden-comments">
+
+    <div class="comment-input-box">
+
+        <input
+            type="text"
+            id="commentInput{{ loop.index }}"
+            placeholder="Write a comment...">
+
+        <button
+            onclick="addComment({{ loop.index }})">
+
+            Post
+
+        </button>
+
+    </div>
+
+    <div
+        class="comments-list"
+        id="comments{{ loop.index }}">
+    </div>
+
+
+        <button
+class="delete-btn"
+onclick="deletePost({{ post['id'] }})">
+
+    🗑 Delete Post
+
+</button>
+
+        <div
+        id="result{{ loop.index }}"
+        class="result">
+        </div>
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<div class="empty">
+
+    <h2>No Posts Yet</h2>
+
+</div>
+
+{% endif %}
+
+</div>
+
+<!-- RIGHT SIDE TEXT DETECTION -->
+
+<div class="floating-detect-box">
+
+    <h2>Text Detection</h2>
+
+    <textarea
+        id="globalDetectText"
+        placeholder="Enter text here..."
+        rows="6"></textarea>
+
+    <button onclick="detectGlobalText()">
+
+        Analyze Text
+
+    </button>
+
+    <div id="globalResult"></div>
+
+</div>
+
+<!-- BOTTOM NAVIGATION -->
+
+<!-- BOTTOM NAVIGATION -->
+
+<div class="bottom-nav">
+
+    <a href="/feed_home" class="nav-item">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+        </a>
+    <a href="/search" class="nav-item">
+
+    <i class="fa-solid fa-magnifying-glass"></i>
+
+    <span>Search</span>
+
+</a>
+<a href="/reels" class="nav-item">
+
+    <i class="fa-solid fa-film"></i>
+
+    <span>Reels</span>
+
+</a>
+    <a href="/message" class="nav-item">
+        <i class="fa-regular fa-message"></i>
+        <span>Message</span>
+    </a>
+
+</div>
+
+</div>
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+    <div class="sidebar-logo">
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+        <span>SafeSocial</span>
+
+    </div>
+
+    <a href="/" class="side-item">
+
+        <i class="fa-solid fa-house"></i>
+
+        <span>Home</span>
+
+    </a>
+
+    <a href="/admin" class="side-item">
+
+        <i class="fa-solid fa-user-shield"></i>
+
+        <span>Admin</span>
+
+    </a>
+
+    <a href="/detect" class="side-item">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <span>Detect</span>
+
+    </a>
+
+    <a href="/dashboard" class="side-item">
+
+        <i class="fa-solid fa-chart-column"></i>
+
+        <span>Dashboard</span>
+
+    </a>
+
+    <a href="/history" class="side-item">
+
+        <i class="fa-solid fa-clock-rotate-left"></i>
+
+        <span>History</span>
+
+    </a>
+
+    <a href="#" class="side-item report-btn" onclick="openReportBox()">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    <span>Report Problem</span>
+</a>
+
+    <a href="/logout" class="side-item logout-btn">
+
+        <i class="fa-solid fa-right-from-bracket"></i>
+
+        <span>Logout</span>
+
+    </a>
+
+</div>
+<div id="shareModal" class="share-modal">
+
+    <div class="share-content">
+
+        <span class="close-btn"
+              onclick="closeShare()">
+              &times;
+        </span>
+
+        <h2>Share Post</h2>
+
+        <div class="social-icons">
+
+            <a href="https://wa.me/917588179411"
+               target="_blank">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+
+            <a href="https://instagram.com/sakshii_2105_"
+               target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+
+            <a href="https://t.me/tscg"
+   target="_blank">
+    <i class="fab fa-telegram"></i>
+</a>
+
+            <a href="https://twitter.com/YOURUSERNAME"
+               target="_blank">
+                <i class="fab fa-x-twitter"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div id="reportBox" class="report-modal">
+
+    <div class="report-content">
+
+        <span class="close-btn" onclick="closeReportBox()">&times;</span>
+
+        <h2>Report a Problem</h2>
+
+        <form id="reportForm" enctype="multipart/form-data">
+
+            <textarea name="issue"
+                      placeholder="Describe your problem..."
+                      required></textarea>
+
+            <input type="file" name="attachment">
+
+            <button type="button" onclick="submitReport()">
+                Submit Report
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- DETECTION SCRIPT -->
+
+<script>
+
+async function detectHate(imageUrl, index){
+
+    try{
+
+        let response = await fetch("/detect_feed_image", {
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+                image:imageUrl
+            })
+
+        });
+
+        let data = await response.json();
+
+        let resultDiv =
+        document.getElementById(
+            "result" + index
+        );
+
+        if(data.prediction == "Hate"){
+
+            resultDiv.innerHTML =
+            "🚨 Hate Content Detected";
+
+            resultDiv.style.color =
+            "#ef4444";
+        }
+
+        else{
+
+            resultDiv.innerHTML =
+            "✅ Neutral Content";
+
+            resultDiv.style.color =
+            "#22c55e";
+        }
+
+    }
+
+    catch(error){
+
+        alert("Detection Failed");
+
+    }
+
+}
+
+async function deletePost(postId){
+
+    if(!confirm("Delete this post?")){
+        return;
+    }
+
+    try{
+
+        let response = await fetch(
+            "/delete_post/" + postId,
+            {
+                method:"DELETE"
+            }
+        );
+
+        let data = await response.json();
+
+        if(data.success){
+
+            location.reload();
+        }
+
+        else{
+
+            alert("Delete failed");
+        }
+
+    }
+
+    catch(error){
+
+        alert("Error deleting post");
+    }
+}
+
+/* GLOBAL TEXT DETECTION */
+
+async function detectGlobalText(){
+
+    let text =
+    document.getElementById(
+        "globalDetectText"
+    ).value;
+
+    let resultDiv =
+    document.getElementById(
+        "globalResult"
+    );
+
+    if(text.trim() === ""){
+
+        resultDiv.innerHTML =
+        "Please enter text";
+
+        resultDiv.style.color =
+        "#facc15";
+
+        return;
+    }
+
+    resultDiv.innerHTML =
+    "Analyzing...";
+
+    try{
+
+        let response = await fetch(
+            "/predict",
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body:JSON.stringify({
+                    text:text
+                })
+            }
+        );
+
+        let data = await response.json();
+
+        if(data.error){
+
+            resultDiv.innerHTML =
+            data.error;
+
+            resultDiv.style.color =
+            "#ef4444";
+
+            return;
+        }
+
+        resultDiv.innerHTML = `
+
+<div style="
+    margin-top:20px;
+    background:#0f172a;
+    padding:18px;
+    border-radius:16px;
+    border:1px solid #1e293b;
+">
+
+    <h2 style="
+        margin-bottom:15px;
+        color:white;
+    ">
+        Prediction:
+        ${data.prediction}
+    </h2>
+
+    ${data.prediction === "Hate" ? `
+
+        <div style="
+            color:#facc15;
+            font-size:18px;
+            margin-bottom:12px;
+            font-weight:bold;
+        ">
+            Toxicity:
+            ${data.toxicity}
+        </div>
+
+        <div style="
+            width:100%;
+            height:16px;
+            background:#334155;
+            border-radius:20px;
+            overflow:hidden;
+            margin-bottom:20px;
+        ">
+
+            <div style="
+                width:90%;
+                height:100%;
+                background:#ef4444;
+            "></div>
+
+        </div>
+
+    ` : ""}
+
+    ${data.highlighted_text ? `
+
+        <div style="
+            background:#020617;
+            padding:14px;
+            border-radius:12px;
+            margin-bottom:15px;
+            line-height:1.8;
+        ">
+
+            ${data.highlighted_text}
+
+        </div>
+
+    ` : ""}
+
+    ${data.explanation ? `
+
+        <div style="
+            background:#111827;
+            padding:14px;
+            border-radius:12px;
+            color:#cbd5e1;
+            line-height:1.7;
+        ">
+
+            <b>Reason:</b>
+            ${data.explanation}
+
+        </div>
+
+    ` : ""}
+
+</div>
+`;
+    }
+
+    catch(error){
+
+        resultDiv.innerHTML =
+        "Detection Failed";
+
+        resultDiv.style.color =
+        "#ef4444";
+    }
+}
+
+/* LIKE BUTTON */
+
+async function toggleLike(postId, btn){
+
+    try{
+
+        let response = await fetch(
+            "/like_post/" + postId,
+            {
+                method:"POST"
+            }
+        );
+
+        let data = await response.json();
+
+        // Like icon change
+        if(data.liked){
+
+            btn.classList.add("active");
+            btn.classList.remove("fa-regular");
+            btn.classList.add("fa-solid");
+
+        }else{
+
+            btn.classList.remove("active");
+            btn.classList.remove("fa-solid");
+            btn.classList.add("fa-regular");
+        }
+
+        // Likes count update
+        let post = btn.closest(".post");
+
+        let countDiv = post.querySelector(".likes");
+
+        if(data.likes !== undefined){
+
+            countDiv.innerHTML =
+            data.likes + " likes";
+
+        }else{
+
+            countDiv.innerHTML =
+            "1 like";
+        }
+
+    }
+
+    catch(error){
+
+        alert("Like failed");
+    }
+}
+
+
+/* ADD COMMENT */
+
+function addComment(postId){
+
+    let input =
+    document.getElementById(
+        "commentInput" + postId
+    );
+
+    let text = input.value.trim();
+
+    if(text === ""){
+        return;
+    }
+
+    let commentsDiv =
+    document.getElementById(
+        "comments" + postId
+    );
+
+    let comment =
+    document.createElement("div");
+
+    comment.className =
+    "single-comment";
+
+    comment.innerHTML = `
+
+        <span>
+            ${text}
+        </span>
+
+        <button onclick="deleteComment(this)">
+            Delete
+        </button>
+    `;
+
+    commentsDiv.appendChild(comment);
+
+    input.value = "";
+}
+
+
+/* DELETE COMMENT */
+
+function deleteComment(btn){
+
+    btn.parentElement.remove();
+}
+
+
+function toggleComments(icon){
+
+    let post =
+    icon.closest(".post");
+
+    let commentSection =
+    post.querySelector(".comment-section");
+
+    if(commentSection.style.display === "block"){
+
+        commentSection.style.display = "none";
+    }
+
+    else{
+
+        commentSection.style.display = "block";
+    }
+}
+
+function openShare(){
+
+    document
+    .getElementById("shareModal")
+    .style.display="flex";
+}
+
+function closeShare(){
+
+    document
+    .getElementById("shareModal")
+    .style.display="none";
+}
+
+function toggleMenu(icon){
+
+    let menu = icon.nextElementSibling;
+
+    // close other menus
+    document.querySelectorAll(".menu-box").forEach(m=>{
+        if(m !== menu){
+            m.style.display = "none";
+        }
+    });
+
+    // toggle
+    if(menu.style.display === "block"){
+        menu.style.display = "none";
+    }else{
+        menu.style.display = "block";
+    }
+}
+
+// click outside close
+document.addEventListener("click", function(e){
+    if(!e.target.closest(".post-menu")){
+        document.querySelectorAll(".menu-box").forEach(m=>{
+            m.style.display = "none";
+        });
+    }
+});
+
+function openReportBox(){
+    document.getElementById("reportBox").style.display="flex";
+}
+
+function closeReportBox(){
+    document.getElementById("reportBox").style.display="none";
+}
+
+async function submitReport(){
+
+    let form = document.getElementById("reportForm");
+    let formData = new FormData(form);
+
+    let response = await fetch("/submit_report",{
+        method:"POST",
+        body:formData
+    });
+
+    let data = await response.json();
+
+    if(data.success){
+        alert("Report submitted successfully!");
+        closeReportBox();
+        form.reset();
+    }else{
+        alert("Failed to submit report");
+    }
+}
+
+</script>
+
+</body>
+</html>

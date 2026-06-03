@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head><title>Add Post</title></head>
+
+<body>
+
+<h2>Admin Panel</h2>
+
+<input id="text" placeholder="Caption"><br><br>
+<input id="image" placeholder="Image URL"><br><br>
+
+<button onclick="addPost()">Add Post</button>
+
+<script>
+
+async function addPost(){
+
+    let text = document.getElementById("text").value;
+    let image = document.getElementById("image").value;
+
+    let res = await fetch("/add_post", {
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({text, image})
+    });
+
+    let data = await res.json();
+    alert(data.message);
+}
+
+</script>
+
+</body>
+</html>

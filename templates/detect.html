@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Detection</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<style>
+
+.result-box{
+  margin-top:20px;
+  background:rgba(15,23,42,0.9);
+  padding:18px;
+  border-radius:14px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.25);
+}
+
+.prediction-title{
+  font-size:24px;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.toxicity-label{
+  font-size:18px;
+  margin-top:10px;
+  color:#facc15;
+}
+
+.toxicity-meter{
+  width:100%;
+  height:18px;
+  background:#334155;
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:15px;
+}
+
+.toxicity-fill{
+  height:100%;
+  transition:0.5s;
+}
+
+.highlight-box{
+  margin-top:15px;
+  background:#020617;
+  padding:15px;
+  border-radius:10px;
+  line-height:1.8;
+  text-align:left;
+}
+
+.explanation-box{
+  margin-top:15px;
+  background:#111827;
+  padding:15px;
+  border-radius:10px;
+  line-height:1.7;
+  text-align:left;
+  color:#cbd5e1;
+}
+
+.mic-btn{
+  background:#9333ea;
+  margin-left:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav class="navbar">
+  <h2>SafeSocial AI</h2>
+
+  <div>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/detect">Detect</a>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/history">History</a>
+    <a href="/logout">Logout</a>
+    <a href="/feed">Feed</a>
+    <a href="/admin/add_post">Add Post</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- SELECT TYPE -->
+  <div class="card">
+
+    <h2>Select Detection Type</h2>
+
+    <select id="detectType" onchange="showSelectedSection()">
+
+      <option value="text">Text Detection</option>
+
+        {# <option value="image">Image Upload Detection</option>
+
+      
+      <option value="url">Image URL Detection</option>#}
+
+      <option value="document">Document Detection</option>
+
+    </select>
+
+    <br><br>
+
+    <button onclick="handleDetect()">Analyze</button>
+
+  </div>
+
+  <!-- TEXT DETECTION -->
+  <div class="card detect-section" id="textSection">
+
+    <h2>Hate Speech Detection (Text)</h2>
+
+    <textarea id="text"
+              placeholder="Enter text..."
+              rows="6"
+              style="width:100%;padding:15px;border-radius:10px;"></textarea>
+
+    <br><br>
+
+    <button onclick="analyze()">Analyze Text</button>
+
+
+    <div id="result"></div>
+
+  </div>
+
+  {# IMAGE DETECTION 
+  <div class="card detect-section"
+       id="imageSection"
+       style="display:none;">
+
+    <h2>Hate Detection (Image)</h2>
+
+    <input type="file"
+           id="imageInput"
+           accept="image/*">
+
+    <br><br>
+
+    <img id="previewImage"
+         style="max-width:300px;display:none;border-radius:10px;">
+
+    <br><br>
+
+    <div id="imageResult"></div>
+
+  </div>
+
+   IMAGE URL 
+  <div class="card detect-section"
+       id="urlSection"
+       style="display:none;">
+
+    <h2>Hate Detection (Image Link)</h2>
+
+    <input type="text"
+           id="imageUrl"
+           placeholder="Paste direct image URL (.jpg/.png)..."
+           style="width:100%;padding:15px;border-radius:10px;">
+
+    <br><br>
+<img id="urlPreviewImage"
+     src=""
+     alt="URL Preview"
+     style="
+        max-width:300px;
+        display:none;
+        border-radius:12px;
+        margin-top:15px;
+        box-shadow:0 4px 15px rgba(0,0,0,0.3);
+     ">
+    <div id="urlImageResult"></div> 
+
+    </div> #}
+
+<!-- DOCUMENT DETECTION -->
+<div class="card detect-section"
+     id="documentSection">
+
+    <h2>Document Hate Detection</h2>
+
+    <input type="file"
+           id="documentInput"
+           accept=".pdf,.doc,.docx,.txt">
+
+    <br><br>
+
+    <div id="documentResult"></div>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+/* SHOW/HIDE */
+function showSelectedSection(){
+
+    let type = document.getElementById("detectType").value;
+
+    document.getElementById("textSection").style.display = "none";
+    document.getElementById("imageSection").style.display = "none";
+    document.getElementById("urlSection").style.display = "none";
+    document.getElementById("documentSection").style.display = "none";
+
+    if(type === "text"){
+        document.getElementById("textSection").style.display = "block";
+    }
+
+    else if(type === "image"){
+        document.getElementById("imageSection").style.display = "block";
+    }
+
+   else if(type === "url"){
+
+    document.getElementById("urlSection").style.display = "block";
+
+}
+
+else{
+
+    document.getElementById("documentSection").style.display = "block";
+
+}
+}
+
+
+/* ANALYZE SELECTED */
+function handleDetect(){
+
+    let type = document.getElementById("detectType").value;
+
+    if(type === "text"){
+        analyze();
+    }
+
+    else if(type === "image"){
+        analyzeImage();
+    }
+
+   else if(type === "url"){
+
+    analyzeImageUrl();
+
+}
+
+else{
+
+    analyzeDocument();
+
+}
+}
+
+
+/* TOXICITY BAR */
+function getMeterStyle(toxicity){
+
+    if(toxicity === "High Toxicity"){
+        return {
+            width:"90%",
+            color:"#ef4444"
+        };
+    }
+
+    else if(toxicity === "Medium Toxicity"){
+        return {
+            width:"60%",
+            color:"#f59e0b"
+        };
+    }
+
+    return {
+        width:"25%",
+        color:"#22c55e"
+    };
+}
+
+
+/* RESULT UI */
+function renderResult(target, data){
+
+    let meter = getMeterStyle(data.toxicity || "Low Toxicity");
+
+    target.innerHTML = `
+        <div class="result-box">
+
+            <div class="prediction-title">
+                Prediction: ${data.prediction}
+            </div>
+
+            ${data.prediction === "Hate" && data.toxicity ? `
+                <div class="toxicity-label">
+                    Toxicity: ${data.toxicity}
+                </div>
+
+                <div class="toxicity-meter">
+                    <div class="toxicity-fill"
+                         style="width:${meter.width}; background:${meter.color};">
+                    </div>
+                </div>
+            ` : ""}
+
+            ${data.prediction === "Hate" && data.severity ? `
+                <div class="toxicity-label">
+                    Severity: ${data.severity}
+                </div>
+            ` : ""}
+
+            ${data.highlighted_text ? `
+                <div class="highlight-box">
+                    ${data.highlighted_text}
+                </div>
+            ` : ""}
+
+            ${data.explanation ? `
+                <div class="explanation-box">
+                    <b>Reason:</b> ${data.explanation}
+                </div>
+            ` : ""}
+
+             
+
+            ${data.sanitized_text ? `
+                <div class="explanation-box">
+                    <b>Sanitized Text:</b> ${data.sanitized_text}
+                </div>
+            ` : ""}
+
+        </div>
+    `;
+}
+/* TEXT DETECTION */
+async function analyze(){
+
+    let text = document.getElementById("text").value;
+
+    let result = document.getElementById("result");
+
+    if(text.trim() === ""){
+        result.innerHTML = "Please enter some text";
+        return;
+    }
+
+    result.innerHTML = "Analyzing...";
+
+    try{
+
+        let res = await fetch("/predict", {
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+                text:text
+            })
+
+        });
+
+        let data = await res.json();
+
+        if(data.error){
+            result.innerHTML = data.error;
+            return;
+        }
+
+        renderResult(result, data);
+
+    }
+
+    catch(error){
+
+        result.innerHTML =
+        "Something went wrong while analyzing text";
+
+    }
+}
+
+
+/* REAL TIME DETECTION */
+document.getElementById("text")
+.addEventListener("input", function(){
+
+    clearTimeout(window.detectTimer);
+
+    window.detectTimer = setTimeout(() => {
+
+        if(document.getElementById("text")
+           .value.trim().length > 2){
+
+            analyze();
+
+        }
+
+    }, 800);
+
+});
+
+
+
+
+/* IMAGE PREVIEW */
+document.getElementById("imageInput")
+.addEventListener("change", function(){
+
+    let file = this.files[0];
+
+    let preview =
+    document.getElementById("previewImage");
+
+    if(file){
+
+        preview.src =
+        URL.createObjectURL(file);
+
+        preview.style.display = "block";
+
+        preview.style.maxWidth = "300px";
+
+        preview.style.marginTop = "15px";
+
+        preview.style.borderRadius = "12px";
+
+    }
+
+});
+
+/* IMAGE DETECTION */
+async function analyzeImage(){
+
+    let fileInput =
+    document.getElementById("imageInput");
+
+    let result =
+    document.getElementById("imageResult");
+
+    if(fileInput.files.length === 0){
+
+        result.innerHTML =
+        "Please select an image";
+
+        return;
+
+    }
+
+    let formData = new FormData();
+
+    formData.append(
+        "image",
+        fileInput.files[0]
+    );
+
+    result.innerHTML = "Analyzing image...";
+
+    try{
+
+        let res = await fetch("/predict_image", {
+
+            method:"POST",
+
+            body:formData
+
+        });
+
+        let data = await res.json();
+
+        if(data.error){
+
+            result.innerHTML = data.error;
+            return;
+
+        }
+
+        renderResult(result, data);
+
+    }
+
+    catch(error){
+
+        result.innerHTML =
+        "Error analyzing image";
+
+    }
+
+}
+
+
+/* IMAGE URL DETECTION */
+ async function analyzeImageUrl(){
+
+    let imageUrl =
+    document.getElementById("imageUrl").value;
+
+    let preview =
+    document.getElementById("urlPreviewImage");
+
+    preview.src = imageUrl;
+
+    preview.style.display = "block";
+    let result =
+    document.getElementById("urlImageResult");
+
+    if(imageUrl.trim() === ""){
+
+        result.innerHTML =
+        "Please paste image URL";
+
+        return;
+
+    }
+
+    result.innerHTML =
+    "Analyzing image URL...";
+
+    try{
+
+        let res = await fetch("/predict_image_url", {
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+                image_url:imageUrl
+            })
+
+        });
+
+        let data = await res.json();
+
+        if(data.error){
+
+            result.innerHTML = data.error;
+            return;
+
+        }
+
+        renderResult(result, data);
+
+    }
+
+    catch(error){
+
+        result.innerHTML =
+        "Error analyzing image URL";
+
+    }
+
+} 
+
+
+/* DEFAULT */
+showSelectedSection();
+
+
+async function analyzeDocument(){
+
+    let fileInput =
+    document.getElementById("documentInput");
+
+    let result =
+    document.getElementById("documentResult");
+
+    if(fileInput.files.length === 0){
+
+        result.innerHTML =
+        "Please upload a document";
+
+        return;
+
+    }
+
+    let formData = new FormData();
+
+    formData.append(
+        "document",
+        fileInput.files[0]
+    );
+
+    result.innerHTML =
+    "Analyzing document...";
+
+    try{
+
+        let res = await fetch("/predict_document", {
+
+            method:"POST",
+
+            body:formData
+
+        });
+
+        let data = await res.json();
+
+        if(data.error){
+
+            result.innerHTML = data.error;
+            return;
+
+        }
+
+        renderResult(result, data);
+
+    }
+
+    catch(error){
+
+        result.innerHTML =
+        "Error analyzing document";
+
+    }
+}
+
+</script>
+
+</body>

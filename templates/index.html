@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SafeSocial AI</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<!-- INLINE CSS (ONLY FOR THIS PAGE) -->
+<style>
+.hero{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:50px;
+  gap:40px;
+  min-height:85vh;
+}
+
+.hero-image{
+  flex:1;
+  display:flex;
+  justify-content:center;
+}
+
+.hero-image img{
+  width:80%;
+  max-width:420px;
+  border-radius:15px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  transition:0.3s;
+}
+
+.hero-image img:hover{
+  transform:scale(1.05);
+}
+
+.text{
+  flex:1;
+}
+
+@media (max-width: 768px){
+  .hero{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .hero-image img{
+    width:70%;
+  }
+}
+</style>
+
+</head>
+<body>
+
+<nav class="navbar">
+  <h2>SafeSocial AI</h2>
+  <div>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/detect">Detect</a>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/history">History</a>
+    <a href="/login">Login</a>
+    <a href="/logout">Logout</a>
+  </div>
+</nav>
+
+<section class="hero">
+
+  <!-- LEFT IMAGE -->
+  <div class="hero-image">
+    <img src="{{ url_for('static', filename='images/social.jpg') }}" alt="social media">
+  </div>
+
+  <!-- RIGHT TEXT -->
+  <div class="text">
+    <h1>AI Hate Speech Detection</h1>
+    <p>Simple AI webpage for detecting hate speech</p>
+    <button onclick="goDetect()">Get Started</button>
+  </div>
+
+</section>
+
+<script>
+function goDetect(){
+  window.location.href = "/detect";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SafeSocial Home</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#0f172a;
+    font-family:Arial,sans-serif;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* TOPBAR */
+
+.topbar{
+
+    width:100%;
+
+    padding:18px 30px;
+
+    background:#111827;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    border-bottom:1px solid #1e293b;
+}
+
+.logo{
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    background:linear-gradient(to right,#38bdf8,#8b5cf6);
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.top-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+}
+
+.icon-btn{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    background:#1e293b;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+    font-size:20px;
+}
+
+.icon-btn:hover{
+
+    transform:scale(1.12);
+
+    background:#38bdf8;
+}
+
+.feed-btn{
+
+    padding:12px 22px;
+
+    background:linear-gradient(to right,#38bdf8,#8b5cf6);
+
+    border-radius:12px;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    transition:0.3s;
+}
+
+.feed-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 0 20px rgba(56,189,248,0.5);
+}
+
+.logout-btn{
+
+    padding:12px 20px;
+
+    background:#ef4444;
+
+    border-radius:12px;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    transition:0.3s;
+}
+
+.logout-btn:hover{
+
+    transform:translateY(-3px);
+
+    background:#dc2626;
+}
+
+/* HERO SECTION */
+
+.hero{
+
+    width:100%;
+
+    min-height:90vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:50px 20px;
+}
+
+.hero-card{
+
+    width:100%;
+
+    max-width:1200px;
+
+    background:#111827;
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:40px;
+
+    padding:50px;
+
+    border:1px solid #1e293b;
+
+    box-shadow:0 10px 40px rgba(0,0,0,0.4);
+
+    animation:fadeUp 1s ease;
+}
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.hero-text{
+
+    flex:1;
+}
+
+.hero-text h1{
+
+    font-size:58px;
+
+    line-height:1.2;
+
+    margin-bottom:20px;
+
+    background:linear-gradient(to right,#38bdf8,#8b5cf6);
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.hero-text p{
+
+    font-size:18px;
+
+    line-height:1.8;
+
+    color:#cbd5e1;
+
+    margin-bottom:35px;
+}
+
+.hero-buttons{
+
+    display:flex;
+
+    gap:20px;
+}
+
+.hero-buttons a{
+
+    padding:14px 28px;
+
+    border-radius:14px;
+
+    text-decoration:none;
+
+    color:white;
+
+    font-weight:bold;
+
+    transition:0.3s;
+}
+
+.primary-btn{
+
+    background:linear-gradient(to right,#38bdf8,#8b5cf6);
+}
+
+.secondary-btn{
+
+    background:#1e293b;
+}
+
+.hero-buttons a:hover{
+
+    transform:scale(1.05);
+}
+
+/* HERO IMAGE */
+
+.hero-image{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+}
+
+.hero-image img{
+
+    width:100%;
+
+    max-width:500px;
+
+    animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-15px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+}
+
+/* FEATURES */
+
+.features{
+
+    width:100%;
+
+    padding:40px 20px 80px;
+}
+
+.features-container{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+    gap:25px;
+}
+
+.feature-card{
+
+    background:#111827;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    text-align:center;
+
+    border:1px solid #1e293b;
+
+    transition:0.4s;
+}
+
+.feature-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:0 0 25px rgba(56,189,248,0.25);
+}
+
+.feature-card i{
+
+    font-size:45px;
+
+    margin-bottom:20px;
+
+    color:#38bdf8;
+}
+
+.feature-card h3{
+
+    margin-bottom:15px;
+}
+
+.feature-card p{
+
+    color:#cbd5e1;
+
+    line-height:1.6;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .hero-card{
+
+        flex-direction:column;
+
+        text-align:center;
+    }
+
+    .hero-text h1{
+
+        font-size:42px;
+    }
+
+    .hero-buttons{
+
+        justify-content:center;
+    }
+
+    .topbar{
+
+        flex-direction:column;
+
+        gap:20px;
+    }
+}
+
+.hero-image img{
+
+    width:300px;
+
+    border-radius:20px;
+
+    box-shadow:0 0 25px rgba(124,58,237,0.7);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+    <div class="logo">
+        SafeSocial
+    </div>
+
+    <div class="top-actions">
+
+        <div class="icon-btn">
+            <i class="fa-regular fa-heart"></i>
+        </div>
+
+        <div class="icon-btn">
+            <i class="fa-regular fa-bell"></i>
+        </div>
+
+        <a href="/feed" class="feed-btn">
+            Feed Page
+        </a>
+
+        <a href="/logout" class="logout-btn">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-card">
+
+        <div class="hero-text">
+
+            <h1>
+                Welcome To SafeSocial Feed
+            </h1>
+
+            <p>
+
+                Explore a modern AI-powered social media feed where users can
+                upload posts, detect hate speech from images, interact with
+                content, and enjoy a safe digital environment with beautiful UI
+                and smooth experience.
+
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="/feed" class="primary-btn">
+                    Open Feed
+                </a>
+
+                <a href="/detect" class="secondary-btn">
+                    AI Detect
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="hero-image">
+
+    <img
+    src="{{ url_for('static', filename='images/female_dark.png') }}"
+    alt="Female Image">
+
+</div>
+    </div>
+
+</section>
+
+<!-- FEATURES -->
+
+<section class="features">
+
+    <div class="features-container">
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <h3>AI Protection</h3>
+
+            <p>
+                Detect hate speech and harmful text instantly using AI.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-image"></i>
+
+            <h3>Image OCR</h3>
+
+            <p>
+                Extract text from uploaded images and analyze content.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-users"></i>
+
+            <h3>Social Feed</h3>
+
+            <p>
+                Share posts and interact with the SafeSocial community.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            <h3>Smart Dashboard</h3>
+
+            <p>
+                View analytics, detections, and user activity visually.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

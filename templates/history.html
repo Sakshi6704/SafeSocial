@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>History</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+  <h2>SafeSocial AI</h2>
+  <div>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/detect">Detect</a>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/history">History</a>
+    <a href="/logout">Logout</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="card" style="width:90%;">
+    <h2>Your Detection History</h2>
+
+    {% if records %}
+      <table style="width:100%; color:white; border-collapse:collapse;">
+        <tr>
+          <th style="padding:10px; border-bottom:1px solid white;">Text</th>
+          <th style="padding:10px; border-bottom:1px solid white;">Image</th>
+          <th style="padding:10px; border-bottom:1px solid white;">Prediction</th>
+          <th style="padding:10px; border-bottom:1px solid white;">Hate %</th>
+          <th style="padding:10px; border-bottom:1px solid white;">Neutral %</th>
+          <th style="padding:10px; border-bottom:1px solid white;">Date</th>
+        </tr>
+
+        {% for row in records %}
+        <tr>
+          
+          <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,0.2);">
+            {{ row[0] if row[0] else "-" }}
+          </td>
+
+          <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,0.2);">
+            
+            {% if row[1] %}
+              
+              {% if row[1].startswith('http') %}
+                <a href="{{ row[1] }}" target="_blank" style="color:#38bdf8;">
+                  View Image
+                </a>
+                <br><br>
+                <img src="{{ row[1] }}" style="max-width:120px; border-radius:8px;">
+              {% else %}
+                {{ row[1] }}
+              {% endif %}
+
+            {% else %}
+              -
+            {% endif %}
+
+          </td>
+
+          <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,0.2);">
+            {{ row[2] }}
+          </td>
+
+          <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,0.2);">
+            {{ row[3] }}
+          </td>
+
+          <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,0.2);">
+            {{ row[4] }}
+          </td>
+
+          <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,0.2);">
+            {{ row[5] }}
+          </td>
+
+        </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p>No history found.</p>
+    {% endif %}
+  </div>
+</div>
+
+</body>
+</html>

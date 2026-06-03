@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Admin Dashboard</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#020b2d;
+background-image:
+radial-gradient(circle at top,
+#0d1f60,
+#020b2d 60%);
+font-family:'Segoe UI',sans-serif;
+color:white;
+}
+
+.navbar{
+background:#031136;
+height:80px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:0 40px;
+border-bottom:1px solid #0ea5e9;
+}
+
+.navbar h2{
+font-size:38px;
+font-weight:700;
+color:white;
+}
+
+.navbar a{
+color:white;
+text-decoration:none;
+margin-left:28px;
+font-size:17px;
+}
+
+.navbar a:hover{
+color:#00d4ff;
+}
+.logo{
+font-size:32px;
+color:#00d4ff;
+margin-right:10px;
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:30px;
+font-weight:700;
+}
+
+.nav-links a{
+color:white;
+text-decoration:none;
+margin-left:28px;
+font-size:17px;
+transition:.3s;
+}
+
+.nav-links a:hover{
+color:#00d4ff;
+}
+
+.active-link{
+color:#00d4ff !important;
+border-bottom:3px solid #00d4ff;
+padding-bottom:8px;
+}
+
+.container{
+width:94%;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:#04153f;
+border:1px solid rgba(0,191,255,.15);
+border-radius:22px;
+padding:25px;
+box-shadow:
+0 0 20px rgba(0,170,255,.08);
+}
+.feed-card{
+background:
+linear-gradient(
+135deg,
+rgba(3,20,60,.95),
+rgba(8,18,55,.95)
+);
+
+border:1px solid rgba(0,212,255,.15);
+
+backdrop-filter:blur(20px);
+
+border-radius:30px;
+
+padding:35px;
+
+position:relative;
+
+overflow:hidden;
+}
+
+.feed-card::before{
+content:"";
+position:absolute;
+width:300px;
+height:300px;
+background:radial-gradient(
+circle,
+rgba(0,212,255,.15),
+transparent
+);
+top:-120px;
+right:-120px;
+}
+border:1px solid #1e40af;
+
+border-radius:24px;
+
+padding:30px;
+}
+
+
+.top-section{
+display:grid;
+grid-template-columns:1fr;
+gap:20px;
+margin-bottom:20px;
+}
+
+.feed-card{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:30px;
+align-items:center;
+}
+
+.feed-right{
+text-align:center;
+}
+
+.feed-right img{
+max-width:200px;
+}
+
+.heading{
+font-size:38px;
+font-weight:700;
+margin-bottom:20px;
+}
+
+.option-tabs{
+display:flex;
+gap:15px;
+margin-bottom:20px;
+}
+
+.option-btn{
+padding:14px 28px;
+border:none;
+border-radius:14px;
+background:#111827;
+color:white;
+cursor:pointer;
+font-size:16px;
+font-weight:600;
+}
+
+.option-btn.active{
+background:linear-gradient(
+90deg,
+#2563eb,
+#7c3aed
+);
+}
+
+.input-box{
+width:100%;
+padding:15px;
+border-radius:12px;
+border:1px solid rgba(255,255,255,.08);
+background:#08112f;
+color:white;
+margin-top:8px;
+}
+
+.upload-btn{
+width:100%;
+margin-top:20px;
+padding:16px;
+border:none;
+border-radius:12px;
+font-size:18px;
+font-weight:600;
+cursor:pointer;
+background:linear-gradient(
+90deg,
+#2563eb,
+#9333ea
+);
+color:white;
+}
+
+.banner{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:30px;
+background:
+linear-gradient(
+90deg,
+rgba(10,20,70,.95),
+rgba(25,15,70,.95)
+);
+border:1px solid rgba(255,0,255,.15);
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.banner-left{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+.folder-icon{
+font-size:70px;
+}
+
+.problem-folder{
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:35px;
+
+background:
+linear-gradient(
+90deg,
+#081a52,
+#11143f
+);
+
+border-radius:22px;
+
+margin:20px 0;
+
+border:1px solid rgba(255,0,255,.15);
+}
+
+.banner-btn{
+padding:15px 30px;
+border-radius:15px;
+border:1px solid #00d4ff;
+color:#00d4ff;
+text-decoration:none;
+}
+
+.middle-grid{
+display:grid;
+grid-template-columns:1.3fr 1fr;
+gap:20px;
+margin-bottom:20px;
+}
+
+.stats-grid{
+display:grid;
+grid-template-columns:
+repeat(4,1fr);
+
+gap:18px;
+}
+.stat-card{
+padding:25px;
+border-radius:18px;
+background:#07173d;
+text-align:center;
+}
+
+.stat-card i{
+font-size:35px;
+margin-bottom:15px;
+}
+
+.stat-box{
+background:#071b4f;
+border-radius:18px;
+padding:25px;
+text-align:center;
+height:150px;
+}
+
+.activity-table{
+width:100%;
+margin-top:20px;
+border-collapse:collapse;
+overflow:hidden;
+border-radius:15px;
+}
+
+.activity-table th{
+background:#071b4f;
+padding:18px;
+}
+
+.activity-table td{
+padding:18px;
+border-bottom:1px solid #132a6f;
+}
+.hate{
+background:#7f1d1d;
+padding:8px 14px;
+border-radius:10px;
+}
+
+.neutral{
+background:#14532d;
+padding:8px 14px;
+border-radius:10px;
+}
+
+.progress{
+height:8px;
+background:#1e293b;
+border-radius:10px;
+overflow:hidden;
+}
+
+.progress-fill{
+height:100%;
+background:#ff005d;
+}
+
+@media(max-width:1000px){
+
+.feed-card{
+grid-template-columns:1fr;
+}
+
+.middle-grid{
+grid-template-columns:1fr;
+}
+
+.stats-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+.feed-right img{
+width:180px;
+
+animation:floatImage 4s ease-in-out infinite;
+}
+
+@keyframes floatImage{
+
+0%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-15px);
+}
+
+100%{
+transform:translateY(0);
+}
+
+}
+
+.input-box{
+width:100%;
+padding:18px;
+
+border-radius:14px;
+
+background:#08112f;
+
+border:1px solid rgba(255,255,255,.08);
+
+color:white;
+
+transition:.4s;
+}
+
+.input-box:focus{
+
+border-color:#00d4ff;
+
+box-shadow:
+0 0 20px rgba(0,212,255,.35);
+
+outline:none;
+
+transform:scale(1.01);
+
+}
+
+.upload-btn{
+
+background:
+linear-gradient(
+90deg,
+#2563eb,
+#7c3aed,
+#9333ea
+);
+
+background-size:300%;
+
+animation:gradientMove 5s linear infinite;
+
+box-shadow:
+0 0 25px rgba(147,51,234,.35);
+
+}
+
+@keyframes gradientMove{
+
+0%{
+background-position:0%;
+}
+
+100%{
+background-position:300%;
+}
+
+}
+
+.upload-btn:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+0 0 40px rgba(147,51,234,.7);
+
+}
+
+.problem-folder{
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:35px 45px;
+
+background:
+linear-gradient(
+135deg,
+#081a52,
+#11143f,
+#1a1148
+);
+
+border-radius:25px;
+
+margin:20px 0;
+
+border:1px solid rgba(255,0,255,.15);
+
+position:relative;
+overflow:hidden;
+
+transition:.4s;
+}
+
+.problem-folder:hover{
+
+transform:translateY(-5px);
+
+box-shadow:
+0 0 30px rgba(0,212,255,.25);
+
+border-color:#00d4ff;
+}
+
+/* Moving Glow Effect */
+
+.problem-folder::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+left:-100%;
+
+width:100%;
+height:100%;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.08),
+transparent
+);
+
+animation:shine 4s infinite;
+}
+
+@keyframes shine{
+
+100%{
+left:120%;
+}
+
+}
+
+.folder-icon{
+
+font-size:80px;
+
+background:
+linear-gradient(
+135deg,
+#facc15,
+#f59e0b
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+animation:floatFolder 3s ease-in-out infinite;
+}
+
+@keyframes floatFolder{
+
+0%{transform:translateY(0);}
+50%{transform:translateY(-8px);}
+100%{transform:translateY(0);}
+
+}
+
+.problem-folder h3{
+
+font-size:34px;
+font-weight:700;
+
+margin-bottom:8px;
+
+color:white;
+}
+
+.problem-folder p{
+
+font-size:18px;
+
+color:#cbd5e1;
+}
+
+.banner-btn{
+
+padding:15px 35px;
+
+border-radius:15px;
+
+background:
+linear-gradient(
+90deg,
+#00d4ff,
+#2563eb
+);
+
+color:white;
+
+font-weight:600;
+
+text-decoration:none;
+
+transition:.3s;
+}
+
+.banner-btn:hover{
+
+transform:scale(1.05);
+
+box-shadow:
+0 0 20px rgba(0,212,255,.5);
+
+}
+
+.folder-icon{
+    font-size:90px;
+    animation:floatFolder 3s ease-in-out infinite;
+}
+
+.problem-folder{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:30px 40px;
+
+    background:linear-gradient(
+        135deg,
+        #081a52,
+        #11143f
+    );
+
+    border-radius:22px;
+    margin:20px 0;
+
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.banner-left{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.folder-icon{
+    font-size:80px;
+    animation:floatFolder 3s ease-in-out infinite;
+}
+
+.problem-btn{
+    padding:14px 32px;
+
+    background:linear-gradient(
+        90deg,
+        #00d4ff,
+        #2563eb
+    );
+
+    color:white;
+    text-decoration:none;
+
+    border-radius:14px;
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.problem-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 20px rgba(0,212,255,.5);
+}
+
+@keyframes floatFolder{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-8px);}
+    100%{transform:translateY(0);}
+}
+.feed-right{
+    text-align:center;
+
+    position:relative;
+
+    margin-left:-40px; /* left shift */
+}
+
+.feed-right img{
+
+    width:260px;
+
+    border-radius:20px;
+
+    box-shadow:
+    0 0 20px rgba(0,212,255,.4),
+    0 0 40px rgba(147,51,234,.3);
+
+    animation:
+    floatImage 4s ease-in-out infinite,
+    glowPulse 3s ease-in-out infinite;
+
+    transition:.4s;
+}
+
+.feed-right img:hover{
+
+    transform:
+    scale(1.08)
+    rotate(3deg);
+
+    box-shadow:
+    0 0 30px rgba(0,212,255,.8),
+    0 0 60px rgba(147,51,234,.7);
+}
+
+/* Floating */
+
+@keyframes floatImage{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-15px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+}
+
+/* Glow */
+
+@keyframes glowPulse{
+
+    0%{
+        box-shadow:
+        0 0 20px rgba(0,212,255,.4),
+        0 0 40px rgba(147,51,234,.3);
+    }
+
+    50%{
+        box-shadow:
+        0 0 35px rgba(0,212,255,.8),
+        0 0 70px rgba(147,51,234,.6);
+    }
+
+    100%{
+        box-shadow:
+        0 0 20px rgba(0,212,255,.4),
+        0 0 40px rgba(147,51,234,.3);
+    }
+}
+.feed-right{
+    margin-right:-800px;
+}
+
+.feed-right::before{
+    content:"";
+
+    position:absolute;
+
+    width:280px;
+    height:280px;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(0,212,255,.25),
+        rgba(147,51,234,.2),
+        transparent
+    );
+
+    border-radius:50%;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    z-index:-1;
+
+    animation:spinGlow 12s linear infinite;
+}
+
+@keyframes spinGlow{
+    from{transform:translate(-50%,-50%) rotate(0deg);}
+    to{transform:translate(-50%,-50%) rotate(360deg);}
+}
+
+.problem-folder{
+    position:relative;
+    overflow:hidden;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:25px 35px;
+
+    background:linear-gradient(
+        135deg,
+        #0f1b6d,
+        #08103f
+    );
+
+    border-radius:25px;
+
+    animation:fadeUp .8s ease;
+    transition:.4s;
+}
+
+/* Hover */
+.problem-folder:hover{
+    transform:translateY(-8px) scale(1.02);
+    box-shadow:
+    0 15px 40px rgba(59,130,246,.35);
+}
+
+/* Moving light effect */
+.problem-folder::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-150%;
+
+    width:80%;
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.15),
+        transparent
+    );
+
+    transform:skewX(-25deg);
+
+    animation:shine 4s infinite;
+}
+
+/* Folder icon */
+.folder-icon{
+
+    font-size:90px;
+
+    animation:floatFolder 3s ease-in-out infinite;
+}
+
+/* View button */
+.view-btn{
+
+    padding:18px 35px;
+
+    border-radius:20px;
+
+    border:1px solid rgba(42, 139, 207, 0.1);
+
+    background:rgba(255,255,255,.05);
+
+    backdrop-filter:blur(10px);
+
+    color:#c084fc;
+
+    text-decoration:none;
+
+    transition:.3s;
+}
+
+.view-btn:hover{
+
+    background:#9333ea;
+
+    color:white;
+
+    transform:scale(1.08);
+}
+
+/* Folder floating */
+@keyframes floatFolder{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-10px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+}
+
+/* Light sweep */
+@keyframes shine{
+
+    0%{
+        left:-150%;
+    }
+
+    100%{
+        left:150%;
+    }
+}
+
+/* Card entry */
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <h2>👤 Admin Dashboard</h2>
+
+    <div>
+
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/detect">Detect</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/history">History</a>
+        <a href="/feed">Feed</a>
+        <a href="/logout">Logout</a>
+
+    </div>
+
+</nav>
+
+<div class="container">
+
+    <!-- TOP -->
+
+    <div class="top-section">
+
+        <!-- LEFT -->
+
+        <div class="card">
+
+           
+            <!-- PROBLEMS FOLDER CARD -->
+
+
+           
+
+        <!-- RIGHT -->
+
+        
+
+
+
+  
+
+        <!-- ADD POST -->
+
+        
+
+            <!-- OPTIONS -->
+
+            <div class="post-options">
+
+                <button
+                    class="option-btn active"
+                    id="urlBtn"
+                    onclick="showUrlOption()">
+
+                    🌐 Image URL
+
+                </button>
+
+                <button
+                    class="option-btn"
+                    id="fileBtn"
+                    onclick="showFileOption()">
+
+                    📁 Upload File
+
+                </button>
+
+                <div class="feed-right">
+
+<img src="https://w0.peakpx.com/wallpaper/124/89/HD-wallpaper-neon-icon-violet-background-neon-symbols-creative-neon-icons-sign-media-signs-icon-media-icons.jpg">
+            </div>
+
+            
+
+            <!-- CAPTION -->
+
+            <div class="input-group">
+
+                <label>
+                    Caption
+                </label>
+
+                <input
+                    type="text"
+                    id="postText"
+                    placeholder="Enter caption"
+                >
+
+            </div>
+
+            <!-- URL OPTION -->
+
+            <div
+                class="input-group"
+                id="urlSection">
+
+                <label>
+                    Image URL
+                </label>
+
+                <input
+                    type="text"
+                    id="postImageUrl"
+                    placeholder="Paste image URL"
+                >
+
+            </div>
+
+            <!-- FILE OPTION -->
+
+            <div
+                class="input-group"
+                id="fileSection"
+                style="display:none;">
+
+                <label>
+                    Upload Image
+                </label>
+
+                <input
+                    type="file"
+                    id="postImageFile"
+                >
+
+            </div>
+
+            <!-- BUTTON -->
+
+            <button
+                onclick="addPost()"
+                class="upload-btn">
+
+                 Upload Post
+
+            </button>
+
+            <p id="msg"></p>
+
+        </div>
+
+
+       
+    </div>
+
+</div>
+
+
+
+   <div class="problem-folder">
+
+    <div class="folder-icon">
+        📁
+    </div>
+
+    <div>
+        <h2>Problems Folder</h2>
+        <p>View user reported issues & attachments</p>
+    </div>
+<a href="/admin_reports" class="problem-folder">
+        View →
+    </a>
+
+</div>
+
+
+
+<!-- MIDDLE SECTION -->
+
+<div class="middle-grid">
+
+<!-- ADMIN OVERVIEW -->
+
+<div class="card">
+
+<h2>
+<i class="fas fa-chart-column"></i>
+Admin Overview
+</h2>
+
+<div class="stats-grid">
+
+<div class="stat-card">
+
+<i class="fas fa-users"
+style="color:#38bdf8;"></i>
+
+<h4>Total Users</h4>
+
+<h1>{{ total_users }}</h1>
+
+<p style="color:#00ffb3;">
+↑ 12%
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fas fa-chart-line"
+style="color:#c084fc;"></i>
+
+<h4>Total Detections</h4>
+
+<h1>{{ total_results }}</h1>
+
+<p style="color:#00ffb3;">
+↑ 18%
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fas fa-fire"
+style="color:#ef4444;"></i>
+
+<h4>Hate Posts</h4>
+
+<h1 style="color:#ef4444;">
+{{ hate_count }}
+</h1>
+
+<p style="color:#ff6b6b;">
+↑ 9%
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fas fa-circle-check"
+style="color:#22c55e;"></i>
+
+<h4>Neutral Posts</h4>
+
+<h1 style="color:#22c55e;">
+{{ neutral_count }}
+</h1>
+
+<p style="color:#00ffb3;">
+↑ 21%
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- CHART -->
+
+<div class="card">
+
+<h2>
+<i class="fas fa-chart-pie"></i>
+Detection Chart
+</h2>
+
+<div
+style="
+height:350px;
+margin-top:20px;">
+
+<canvas id="adminChart"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- RECENT ACTIVITY -->
+
+<div class="card">
+
+<div
+style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;">
+
+<h2>
+
+<i class="fas fa-file-lines"></i>
+
+Recent Activity
+
+</h2>
+
+<a href="/history"
+class="banner-btn">
+
+View All →
+
+</a>
+
+</div>
+
+{% if recent_results %}
+
+<table class="activity-table">
+
+<tr>
+
+<th>User</th>
+<th>Prediction</th>
+<th>%</th>
+<th>Date</th>
+
+</tr>
+
+{% for row in recent_results %}
+
+<tr>
+
+<td>
+{{ row[0] }}
+</td>
+
+<td>
+
+{% if row[3] == "Hate" %}
+
+<span class="hate">
+Hate
+</span>
+
+{% else %}
+
+<span class="neutral">
+Neutral
+</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+<div class="progress">
+
+<div
+class="progress-fill"
+style="width:{{ row[4] }}%;">
+</div>
+
+</div>
+
+<div
+style="
+margin-top:8px;">
+
+{{ row[4] }}%
+
+</div>
+
+</td>
+
+<td>
+{{ row[6] }}
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% else %}
+
+<p
+style="
+padding:30px;
+text-align:center;">
+
+No activity found
+
+</p>
+
+{% endif %}
+
+</div>
+
+</div>
+
+<!-- CHART JS -->
+
+<script>
+
+const hateCount = {{ hate_count }};
+const neutralCount = {{ neutral_count }};
+
+new Chart(
+document.getElementById("adminChart"),
+{
+type:"doughnut",
+
+data:{
+labels:[
+"Hate",
+"Neutral"
+],
+
+datasets:[{
+data:[
+hateCount,
+neutralCount
+],
+
+backgroundColor:[
+"#ff005d",
+"#00bfff"
+],
+
+borderWidth:0
+}]
+},
+
+options:{
+responsive:true,
+
+plugins:{
+legend:{
+labels:{
+color:"white"
+}
+}
+}
+}
+});
+
+</script>
+
+<!-- URL / FILE SWITCH -->
+
+<script>
+
+function showUrlOption(){
+
+document.getElementById(
+"urlSection"
+).style.display="block";
+
+document.getElementById(
+"fileSection"
+).style.display="none";
+
+document.getElementById(
+"urlBtn"
+).classList.add("active");
+
+document.getElementById(
+"fileBtn"
+).classList.remove("active");
+
+}
+
+function showFileOption(){
+
+document.getElementById(
+"urlSection"
+).style.display="none";
+
+document.getElementById(
+"fileSection"
+).style.display="block";
+
+document.getElementById(
+"fileBtn"
+).classList.add("active");
+
+document.getElementById(
+"urlBtn"
+).classList.remove("active");
+
+}
+
+</script>
+
+<!-- ADD POST -->
+
+<script>
+
+async function addPost(){
+
+let text =
+document.getElementById(
+"postText"
+).value;
+
+let imageUrl =
+document.getElementById(
+"postImageUrl"
+).value;
+
+let imageFile =
+document.getElementById(
+"postImageFile"
+).files[0];
+
+let msg =
+document.getElementById(
+"msg"
+);
+
+let formData =
+new FormData();
+
+formData.append(
+"text",
+text
+);
+
+formData.append(
+"image_url",
+imageUrl
+);
+
+if(imageFile){
+
+formData.append(
+"image_file",
+imageFile
+);
+
+}
+
+msg.innerHTML =
+"⏳ Uploading...";
+
+try{
+
+let response =
+await fetch(
+"/add_post",
+{
+method:"POST",
+body:formData
+}
+);
+
+let data =
+await response.json();
+
+if(data.message){
+
+msg.innerHTML =
+"✅ Uploaded Successfully";
+
+document.getElementById(
+"postText"
+).value="";
+
+document.getElementById(
+"postImageUrl"
+).value="";
+
+document.getElementById(
+"postImageFile"
+).value="";
+
+}
+else{
+
+msg.innerHTML =
+"❌ Upload Failed";
+
+}
+
+}
+catch{
+
+msg.innerHTML =
+"❌ Server Error";
+
+}
+
+}
+
+</script>
+
+
+</body>
+</html>

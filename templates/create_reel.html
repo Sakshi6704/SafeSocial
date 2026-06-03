@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Create Reel</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#0f172a,#111827);
+    font-family:Arial,sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+/* Background Glow */
+
+body::before{
+    content:"";
+    position:absolute;
+    width:400px;
+    height:400px;
+    background:#38bdf8;
+    border-radius:50%;
+    filter:blur(150px);
+    opacity:.15;
+    top:-100px;
+    left:-100px;
+}
+
+body::after{
+    content:"";
+    position:absolute;
+    width:350px;
+    height:350px;
+    background:#8b5cf6;
+    border-radius:50%;
+    filter:blur(150px);
+    opacity:.15;
+    bottom:-100px;
+    right:-100px;
+}
+
+/* Card */
+
+.card{
+
+    width:500px;
+    max-width:95%;
+
+    background:rgba(17,24,39,.95);
+
+    border:1px solid #1e293b;
+
+    border-radius:25px;
+
+    padding:30px;
+
+    backdrop-filter:blur(20px);
+
+    animation:fadeUp .7s ease;
+
+    z-index:10;
+}
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.title{
+
+    text-align:center;
+
+    color:white;
+
+    font-size:32px;
+
+    margin-bottom:25px;
+}
+
+/* Upload Box */
+
+.upload-box{
+
+    border:2px dashed #38bdf8;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.upload-box:hover{
+
+    background:rgba(56,189,248,.08);
+}
+
+.upload-box i{
+
+    font-size:60px;
+
+    color:#38bdf8;
+
+    margin-bottom:15px;
+}
+
+.upload-box p{
+
+    color:#cbd5e1;
+}
+
+/* Preview */
+
+video{
+
+    width:100%;
+
+    max-height:350px;
+
+    border-radius:15px;
+
+    margin-top:20px;
+
+    display:none;
+}
+
+/* Caption */
+
+textarea{
+
+    width:100%;
+
+    height:120px;
+
+    margin-top:20px;
+
+    background:#0f172a;
+
+    border:1px solid #334155;
+
+    border-radius:15px;
+
+    padding:15px;
+
+    color:white;
+
+    resize:none;
+
+    outline:none;
+}
+
+/* Buttons */
+
+.btns{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:20px;
+}
+
+.back-btn,
+.upload-btn{
+
+    flex:1;
+
+    text-align:center;
+
+    border:none;
+
+    padding:14px;
+
+    border-radius:14px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    text-decoration:none;
+
+    color:white;
+
+    transition:.3s;
+}
+
+.back-btn{
+
+    background:#ef4444;
+}
+
+.back-btn:hover{
+
+    transform:translateY(-3px);
+}
+
+.upload-btn{
+
+    background:linear-gradient(
+        135deg,
+        #38bdf8,
+        #8b5cf6
+    );
+}
+
+.upload-btn:hover{
+
+    transform:translateY(-3px);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<form
+class="card"
+action="/create_reel"
+method="POST"
+enctype="multipart/form-data">
+
+    <h1 class="title">
+        🎬 Create Reel
+    </h1>
+
+    <label class="upload-box">
+
+        <i class="fa-solid fa-video"></i>
+
+        <p>Select Reel Video</p>
+
+        <input
+        type="file"
+        name="video"
+        accept="video/*"
+        hidden
+        onchange="previewVideo(event)"
+        required>
+
+    </label>
+
+    <video
+    id="videoPreview"
+    controls>
+    </video>
+
+    <textarea
+    name="caption"
+    placeholder="Write a caption..."></textarea>
+
+    <div class="btns">
+
+        <a href="/reels"
+           class="back-btn">
+
+           ⬅ Back
+
+        </a>
+
+        <button
+        type="submit"
+        class="upload-btn">
+
+            🚀 Upload Reel
+
+        </button>
+
+    </div>
+
+</form>
+
+<script>
+
+function previewVideo(event){
+
+    let file =
+    event.target.files[0];
+
+    if(!file) return;
+
+    let preview =
+    document.getElementById(
+        "videoPreview"
+    );
+
+    preview.src =
+    URL.createObjectURL(file);
+
+    preview.style.display =
+    "block";
+}
+
+</script>
+
+</body>
+</html>
