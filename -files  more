@@ -1,0 +1,131 @@
+[33m3c758e6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Merge branch 'main' of https://github.com/Sakshi6704/SafeSocial
+[33me91e23d[m Initial commit
+ app.py                                             |  1520 [32m++[m
+ css/style.css                                      |     0
+ database.db                                        |   Bin [31m0[m -> [32m28672[m bytes
+ final_dataset.csv                                  | 24236 [32m+++++++++++++++++[m
+ image_model.h5                                     |   Bin [31m0[m -> [32m39710832[m bytes
+ images_dataset/hateful/h1.jpg                      |   Bin [31m0[m -> [32m41339[m bytes
+ images_dataset/hateful/h10.jpg                     |   Bin [31m0[m -> [32m36159[m bytes
+ images_dataset/hateful/h11.jpg                     |   Bin [31m0[m -> [32m57249[m bytes
+ images_dataset/hateful/h12.jpg                     |   Bin [31m0[m -> [32m66501[m bytes
+ images_dataset/hateful/h13.jpg                     |   Bin [31m0[m -> [32m10955[m bytes
+ images_dataset/hateful/h14.jpg                     |   Bin [31m0[m -> [32m9335[m bytes
+ images_dataset/hateful/h15.jpg                     |   Bin [31m0[m -> [32m6595[m bytes
+ images_dataset/hateful/h16.jpg                     |   Bin [31m0[m -> [32m15024[m bytes
+ images_dataset/hateful/h17.jpg                     |   Bin [31m0[m -> [32m8961[m bytes
+ images_dataset/hateful/h18.jpg                     |   Bin [31m0[m -> [32m11809[m bytes
+ images_dataset/hateful/h19.jpg                     |   Bin [31m0[m -> [32m13414[m bytes
+ images_dataset/hateful/h2.jpg                      |   Bin [31m0[m -> [32m35984[m bytes
+ images_dataset/hateful/h20.jpg                     |   Bin [31m0[m -> [32m8457[m bytes
+ images_dataset/hateful/h21.jpg                     |   Bin [31m0[m -> [32m42842[m bytes
+ images_dataset/hateful/h23.jpg                     |   Bin [31m0[m -> [32m54241[m bytes
+ images_dataset/hateful/h24.jpg                     |   Bin [31m0[m -> [32m37999[m bytes
+ images_dataset/hateful/h25.jpg                     |   Bin [31m0[m -> [32m39575[m bytes
+ images_dataset/hateful/h3.jpg                      |   Bin [31m0[m -> [32m39936[m bytes
+ images_dataset/hateful/h4.jpg                      |   Bin [31m0[m -> [32m68237[m bytes
+ images_dataset/hateful/h5.jpg                      |   Bin [31m0[m -> [32m34086[m bytes
+ images_dataset/hateful/h6.jpg                      |   Bin [31m0[m -> [32m67068[m bytes
+ images_dataset/hateful/h7.jpg                      |   Bin [31m0[m -> [32m35750[m bytes
+ images_dataset/hateful/h8.jpg                      |   Bin [31m0[m -> [32m33900[m bytes
+ images_dataset/hateful/h9.jpg                      |   Bin [31m0[m -> [32m54299[m bytes
+ images_dataset/neutral/n10.jpg                     |   Bin [31m0[m -> [32m75592[m bytes
+ images_dataset/neutral/n11.jpg                     |   Bin [31m0[m -> [32m9975[m bytes
+ images_dataset/neutral/n12.jpg                     |   Bin [31m0[m -> [32m10458[m bytes
+ images_dataset/neutral/n13.jpg                     |   Bin [31m0[m -> [32m10087[m bytes
+ images_dataset/neutral/n14.jpg                     |   Bin [31m0[m -> [32m9863[m bytes
+ images_dataset/neutral/n15.jpg                     |   Bin [31m0[m -> [32m8711[m bytes
+ images_dataset/neutral/n16.jpg                     |   Bin [31m0[m -> [32m8713[m bytes
+ images_dataset/neutral/n17.jpg                     |   Bin [31m0[m -> [32m12388[m bytes
+ images_dataset/neutral/n18.jpg                     |   Bin [31m0[m -> [32m6601[m bytes
+ images_dataset/neutral/n19.jpg                     |   Bin [31m0[m -> [32m8168[m bytes
+ images_dataset/neutral/n2.jpg                      |   Bin [31m0[m -> [32m60560[m bytes
+ images_dataset/neutral/n20.jpg                     |   Bin [31m0[m -> [32m7924[m bytes
+ images_dataset/neutral/n21.jpg                     |   Bin [31m0[m -> [32m8479[m bytes
+ images_dataset/neutral/n22.jpg                     |   Bin [31m0[m -> [32m10914[m bytes
+ images_dataset/neutral/n23.jpg                     |   Bin [31m0[m -> [32m7420[m bytes
+ images_dataset/neutral/n24.jpg                     |   Bin [31m0[m -> [32m10154[m bytes
+ images_dataset/neutral/n26.jpg                     |   Bin [31m0[m -> [32m13940[m bytes
+ images_dataset/neutral/n3.jpg                      |   Bin [31m0[m -> [32m33989[m bytes
+ images_dataset/neutral/n4.jpg                      |   Bin [31m0[m -> [32m86701[m bytes
+ images_dataset/neutral/n5.jpg                      |   Bin [31m0[m -> [32m85713[m bytes
+ images_dataset/neutral/n6.jpg                      |   Bin [31m0[m -> [32m31243[m bytes
+ images_dataset/neutral/n7.jpg                      |   Bin [31m0[m -> [32m53787[m bytes
+ images_dataset/neutral/n8.jpg                      |   Bin [31m0[m -> [32m40185[m bytes
+ images_dataset/neutral/n9.jpg                      |   Bin [31m0[m -> [32m55844[m bytes
+ images_dataset/neutral/positive/p1.jpg             |   Bin [31m0[m -> [32m6708[m bytes
+ images_dataset/neutral/positive/p10.jpg            |   Bin [31m0[m -> [32m10249[m bytes
+ images_dataset/neutral/positive/p11.jpg            |   Bin [31m0[m -> [32m8288[m bytes
+ images_dataset/neutral/positive/p12.jpg            |   Bin [31m0[m -> [32m4718[m bytes
+ images_dataset/neutral/positive/p13.jpg            |   Bin [31m0[m -> [32m8107[m bytes
+ images_dataset/neutral/positive/p14.jpg            |   Bin [31m0[m -> [32m7779[m bytes
+ images_dataset/neutral/positive/p15.jpg            |   Bin [31m0[m -> [32m11244[m bytes
+ images_dataset/neutral/positive/p16.jpg            |   Bin [31m0[m -> [32m11824[m bytes
+ images_dataset/neutral/positive/p17.jpg            |   Bin [31m0[m -> [32m7028[m bytes
+ images_dataset/neutral/positive/p18.jpg            |   Bin [31m0[m -> [32m5738[m bytes
+ images_dataset/neutral/positive/p2.jpg             |   Bin [31m0[m -> [32m6631[m bytes
+ images_dataset/neutral/positive/p3.jpg             |   Bin [31m0[m -> [32m10087[m bytes
+ images_dataset/neutral/positive/p4.jpg             |   Bin [31m0[m -> [32m6876[m bytes
+ images_dataset/neutral/positive/p5.jpg             |   Bin [31m0[m -> [32m11974[m bytes
+ images_dataset/neutral/positive/p6.jpg             |   Bin [31m0[m -> [32m7351[m bytes
+ images_dataset/neutral/positive/p7.jpg             |   Bin [31m0[m -> [32m6863[m bytes
+ images_dataset/neutral/positive/p7.png             |   Bin [31m0[m -> [32m3710[m bytes
+ images_dataset/neutral/positive/p8.jpg             |   Bin [31m0[m -> [32m5213[m bytes
+ images_dataset/neutral/positive/p9.jpg             |   Bin [31m0[m -> [32m6720[m bytes
+ labeled_data.csv                                   | 26954 [32m+++++++++++++++++++[m
+ model.pkl                                          |   Bin [31m0[m -> [32m40730[m bytes
+ search.html                                        |   356 [32m+[m
+ static/css/js/script.js                            |    29 [32m+[m
+ static/css/style.css                               |   210 [32m+[m
+ static/images/about.jpg                            |   Bin [31m0[m -> [32m72754[m bytes
+ static/images/female_dark.png                      |   Bin [31m0[m -> [32m1065557[m bytes
+ static/images/social.jpg                           |   Bin [31m0[m -> [32m265299[m bytes
+ static/profiles/i1.jpg                             |   Bin [31m0[m -> [32m7809[m bytes
+ static/profiles/i10.jpg                            |   Bin [31m0[m -> [32m9497[m bytes
+ static/profiles/i11.jpg                            |   Bin [31m0[m -> [32m7459[m bytes
+ static/profiles/i12.jpg                            |   Bin [31m0[m -> [32m9838[m bytes
+ static/profiles/i2.jpg                             |   Bin [31m0[m -> [32m6898[m bytes
+ static/profiles/i3.jpg                             |   Bin [31m0[m -> [32m4523[m bytes
+ static/profiles/i4.jpg                             |   Bin [31m0[m -> [32m11204[m bytes
+ static/profiles/i5.jpg                             |   Bin [31m0[m -> [32m8340[m bytes
+ static/profiles/i56.jpg                            |   Bin [31m0[m -> [32m6754[m bytes
+ static/profiles/i7.jpg                             |   Bin [31m0[m -> [32m5777[m bytes
+ static/profiles/i8.jpg                             |   Bin [31m0[m -> [32m7363[m bytes
+ static/profiles/i9.jpg                             |   Bin [31m0[m -> [32m8947[m bytes
+ static/profiles/uploads/h10.jpg                    |   Bin [31m0[m -> [32m36159[m bytes
+ static/profiles/uploads/h13.jpg                    |   Bin [31m0[m -> [32m10955[m bytes
+ static/profiles/uploads/h4.jpg                     |   Bin [31m0[m -> [32m68237[m bytes
+ static/profiles/uploads/h6.jpg                     |   Bin [31m0[m -> [32m67068[m bytes
+ static/profiles/uploads/h7.jpg                     |   Bin [31m0[m -> [32m35750[m bytes
+ static/profiles/uploads/h8.jpg                     |   Bin [31m0[m -> [32m33900[m bytes
+ static/profiles/uploads/images.png                 |   Bin [31m0[m -> [32m10730[m bytes
+ static/profiles/uploads/n6.jpg                     |   Bin [31m0[m -> [32m31243[m bytes
+ static/profiles/uploads/n8.jpg                     |   Bin [31m0[m -> [32m40185[m bytes
+ static/profiles/uploads/url_image_1778880785.jpg   |   Bin [31m0[m -> [32m7682[m bytes
+ .../trashed-1745140890-IMG-20250320-WA0169.jpg     |   Bin [31m0[m -> [32m899201[m bytes
+ .../trashed-1745140986-IMG-20250320-WA0520.jpg     |   Bin [31m0[m -> [32m246392[m bytes
+ templates/about.html                               |    35 [32m+[m
+ templates/add_post.html                            |    36 [32m+[m
+ templates/admin.html                               |  1502 [32m++[m
+ templates/admin_reports.html                       |   481 [32m+[m
+ templates/create_post.html                         |   429 [32m+[m
+ templates/create_reel.html                         |   326 [32m+[m
+ templates/dashboard.html                           |    51 [32m+[m
+ templates/detect.html                              |   629 [32m+[m
+ templates/feed.html                                |  1856 [32m++[m
+ templates/feed_home.html                           |   560 [32m+[m
+ templates/history.html                             |    89 [32m+[m
+ templates/index.html                               |    92 [32m+[m
+ templates/login.html                               |    46 [32m+[m
+ templates/reels.html                               |   260 [32m+[m
+ templates/search.html                              |   457 [32m+[m
+ templates/search_user.html                         |   373 [32m+[m
+ templates/signup.html                              |    43 [32m+[m
+ train.csv                                          | 26954 [32m+++++++++++++++++++[m
+ train_image_model.py                               |    92 [32m+[m
+ train_text_model.py                                |   138 [32m+[m
+ vectorizer.pkl                                     |   Bin [31m0[m -> [32m164890[m bytes
+ 125 files changed, 87754 insertions(+)
+[33m889a2a5[m[33m ([m[1;31morigin/main[m[33m)[m Initial commit
+ README.md | 2 [32m++[m
+ 1 file changed, 2 insertions(+)
